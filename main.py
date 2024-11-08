@@ -21,6 +21,12 @@ dp = Dispatcher()
 storage = MemoryStorage()
 
 
+
+@dp.message(Command('buttons'))
+async def buttons(message: Message):
+   await message.answer(f'Приветики, {message.from_user.first_name}', reply_markup=kb.inline_keyboard_url)
+
+
 @dp.message(F.text == "Привет!")
 async def button_hi(message: Message):
     await message.answer(f'Привет, {message.from_user.first_name}', reply_markup=kb.main)
