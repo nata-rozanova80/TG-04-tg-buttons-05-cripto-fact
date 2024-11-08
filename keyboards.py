@@ -7,6 +7,7 @@ main = ReplyKeyboardMarkup(keyboard=[
    [KeyboardButton(text="Пока!")]
 ], resize_keyboard=True)
 
+
 inline_keyboard_test = InlineKeyboardMarkup(inline_keyboard=[
    [InlineKeyboardButton(text="Каталог", callback_data='catalog')],
    [InlineKeyboardButton(text="Новости", callback_data='news')],

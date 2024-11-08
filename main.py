@@ -4,30 +4,37 @@
 # а при нажатии на кнопку "Пока" бот должен отвечать "До свидания, {имя пользователя}!".
 
 import asyncio
+
 from aiogram import Bot, Dispatcher, F
+
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, FSInputFile, CallbackQuery
-import random
-
-from gtts import gTTS
-import os
+from aiogram.fsm.storage.memory import MemoryStorage
 
 from config import TOKEN
 import keyboards as kb
 
+
+
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
+storage = MemoryStorage()
 
-@dp.callback_query(F.data == 'news')
-async def news(callback: CallbackQuery):
-   await callback.answer("Новости подгружаются", show_alert=True)
+
+@dp.message(F.text == "Привет!")
+async def button_hi(message: Message):
+    await message.answer(f'Привет, {message.from_user.first_name}', reply_markup=kb.main)
+
+@dp.message(F.text == "Пока!")
+async def button_bye(message: Message):
+    await message.answer(f'До свидания, {message.from_user.first_name}', reply_markup=kb.main)
 
 @dp.message(CommandStart())
 async def start(message: Message):
-   await message.answer(f'Привет, {message.from_user.first_name}', reply_markup=kb.main)
+   await message.answer(f'Привет!' , reply_markup=kb.main)
 
 async def main():
    await dp.start_polling(bot)
 
 if __name__ == '__main__':
-   asyncio. run(main())
+   asyncio.run(main())
