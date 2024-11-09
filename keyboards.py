@@ -15,10 +15,17 @@ inline_keyboard_url = InlineKeyboardMarkup(inline_keyboard=[
 ])
 
 
-dynamic_keyboard = ["Показать больше...", "Опция 1", "Опция 2"]
+def get_dynamic_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.add(InlineKeyboardButton(text="Показать больше", callback_data="show_more"))
+    return builder.as_markup()
 
-async def dynamic_keyboard():
-   keyboard = InlineKeyboardBuilder()
-   for key in dynamic_keyboard:
-       keyboard.add(InlineKeyboardButton(text=key, url='https://www.youtube.com/watch?v=HfaIcB4Ogxk'))
-   return keyboard.adjust(2).as_markup()
+def get_options_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.add(InlineKeyboardButton(text="Опция 1", callback_data="option_1"))
+    builder.add(InlineKeyboardButton(text="Опция 2", callback_data="option_2"))
+    return builder.as_markup()
+
+
+
+

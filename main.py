@@ -1,24 +1,36 @@
-
-# При отправке команды /start бот будет показывать меню с кнопками "Привет" и "Пока".
-# При нажатии на кнопку "Привет" бот должен отвечать "Привет, {имя пользователя}!",
-# а при нажатии на кнопку "Пока" бот должен отвечать "До свидания, {имя пользователя}!".
+# Задание в README
 
 import asyncio
-
 from aiogram import Bot, Dispatcher, F
-
 from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, FSInputFile, CallbackQuery
+from aiogram.types import Message, FSInputFile, CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.fsm.storage.memory import MemoryStorage
-
 from config import TOKEN
 import keyboards as kb
-
-
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 storage = MemoryStorage()
+
+
+@dp.message(Command('keyboard'))
+async def cmd_dynamic(message: Message):
+    keyboard = kb.get_dynamic_keyboard()
+    await message.answer("Нажмите на кнопку ниже:", reply_markup=keyboard)
+
+@dp.callback_query(F.data == "show_more")
+async def show_more(call: CallbackQuery):
+    keyboard = kb.get_options_keyboard()
+    await call.message.edit_text("Выберите опцию:", reply_markup=keyboard)
+
+@dp.callback_query(F.data == "option_1")
+async def option_1(call: CallbackQuery):
+    await call.message.answer("Вы выбрали Опцию 1")
+
+@dp.callback_query(F.data == "option_2")
+async def option_2(call: CallbackQuery):
+    await call.message.answer("Вы выбрали Опцию 2")
+
 
 
 
