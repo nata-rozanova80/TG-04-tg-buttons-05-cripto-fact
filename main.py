@@ -32,8 +32,6 @@ async def option_2(call: CallbackQuery):
     await call.message.answer("Вы выбрали Опцию 2")
 
 
-
-
 @dp.message(Command('buttons'))
 async def buttons(message: Message):
    await message.answer(f'Приветики, {message.from_user.first_name}', reply_markup=kb.inline_keyboard_url)

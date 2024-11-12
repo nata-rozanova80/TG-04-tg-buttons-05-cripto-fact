@@ -14,7 +14,6 @@ inline_keyboard_url = InlineKeyboardMarkup(inline_keyboard=[
    [InlineKeyboardButton(text="Видео", url='https://vk.com/video')]
 ])
 
-
 def get_dynamic_keyboard():
     builder = InlineKeyboardBuilder()
     builder.add(InlineKeyboardButton(text="Показать больше", callback_data="show_more"))
